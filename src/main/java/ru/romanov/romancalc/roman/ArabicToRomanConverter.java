@@ -1,16 +1,15 @@
 package ru.romanov.romancalc.roman;
 
+import ru.romanov.romancalc.calculator.Result;
 import ru.romanov.romancalc.utils.AlertsMaster;
 
 import java.util.HashMap;
 
 public class ArabicToRomanConverter {
-    public String convert(double result) {
-        if (result == 0) return "nulla";
-        double fractionPartOfResult = result % 1;
-        int fullPartOfResult = (int) (result - fractionPartOfResult);
-        String romanFullPartOfNumber = longToRoman(fullPartOfResult);
-        String romanFractionPartOfNumber = fractionPartToRoman(fractionPartOfResult);
+    public String convert(Result result) {
+        if (result.getFullPart() == 0 && result.getFractionPartX1728() == 0) return "nulla";
+        String romanFullPartOfNumber = longToRoman(result.getFullPart());
+        String romanFractionPartOfNumber = fractionPartToRoman(result.getFractionPartX1728());
         String romanResult = romanFullPartOfNumber + romanFractionPartOfNumber;
         if (romanResult.isEmpty()) AlertsMaster.showSmallSizeAlert(0);
         return romanResult;
@@ -29,8 +28,8 @@ public class ArabicToRomanConverter {
                 + M[num%10000/1000] + C[(num%1000)/100]+ X[(num%100)/10] + I[num%10];
     }
 
-    private String fractionPartToRoman(double decimal) {
-        if (decimal == 0) return "";
+    private String fractionPartToRoman(int fractionPartX1728) {
+        if (fractionPartX1728 == 0) return "";
         HashMap<Character, Integer> storeKeyValue = new HashMap<>();
         storeKeyValue.put('S', 864);
         storeKeyValue.put('•', 144);
@@ -43,20 +42,14 @@ public class ArabicToRomanConverter {
 
         char[] fractionDigits = {'S', '•', 'Є', 'Ɔ', 'Ƨ', 'ƻ', '℈', '»'};
         StringBuilder sb = new StringBuilder();
-        double temp = decimal * 1728;
-        int fraction = (int) temp;
-        double remainder = (temp % 1);
 
         for (int i = 0 ; i < fractionDigits.length ; i++) {
             char currentChar = fractionDigits[i];
             int value = storeKeyValue.get(currentChar);
-            while (fraction > value) {
+            while (fractionPartX1728 >= value) {
                 sb.append(currentChar);
-                fraction -= value;
+                fractionPartX1728 -= value;
             }
-        }
-        if (fraction != 0) {
-            AlertsMaster.showAlertAboutRounding(remainder);
         }
         return sb.toString();
     }

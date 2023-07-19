@@ -4,11 +4,11 @@ import javafx.scene.control.Alert;
 
 public class AlertsMaster {
 
-    public static void showNegativeAlert(double result) {
+    public static void showNegativeAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setHeaderText("В Риме не было отрицательных чисел");
-        alert.setContentText("Результат (" + result + ") невозможно записать римскими цифрами.");
+        alert.setContentText("Результат невозможно записать римскими цифрами.");
         alert.show();
     }
 
@@ -16,7 +16,7 @@ public class AlertsMaster {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setHeaderText("Нет символов для записи таких больших чисел");
-        alert.setContentText("Результат (" + result + ") невозможно записать римскими цифрами." + "\n"
+        alert.setContentText("Результат (" + result + "...) невозможно записать римскими цифрами." + "\n"
         + "Максимальное число - 3999999");
         alert.show();
     }
@@ -63,14 +63,6 @@ public class AlertsMaster {
 
         alert.setHeaderText("Неполный ввод");
         alert.setContentText("Не введено число или действие");
-        alert.show();
-    }
-
-    public static void showAlertAboutRounding(double remainder) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-        alert.setHeaderText("Ответ округлен менее чем на 0,001");
-        alert.setContentText("Округление на: " + "\n" + remainder + " / 1728");
         alert.show();
     }
 

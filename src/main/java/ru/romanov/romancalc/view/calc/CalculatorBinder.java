@@ -1,10 +1,11 @@
 package ru.romanov.romancalc.view.calc;
 
 import javafx.scene.control.Button;
+import ru.romanov.romancalc.calculator.Result;
 import ru.romanov.romancalc.roman.ArabicToRomanConverter;
 import ru.romanov.romancalc.roman.RomanToArabicConverter;
 import ru.romanov.romancalc.roman.RomanValidator;
-import ru.romanov.romancalc.utils.SimpleCalculator;
+import ru.romanov.romancalc.calculator.SpecialCalculator;
 import ru.romanov.romancalc.utils.AlertsMaster;
 import ru.romanov.romancalc.window.InfoWindow;
 
@@ -125,9 +126,9 @@ public class CalculatorBinder {
         String inputRoman2 = getInputNumbers(currentAction)[1];
         boolean romanNumberIsValid = romanValidator.isNumberValid(inputRoman2);
         if (!romanNumberIsValid) return;
-        double input1 = converterToArabic.convert(inputRoman1);
-        double input2 = converterToArabic.convert(inputRoman2);
-        double result = SimpleCalculator.findResult(input1, input2, currentAction);
+        long input1 = converterToArabic.convert(inputRoman1);
+        long input2 = converterToArabic.convert(inputRoman2);
+        Result result = new SpecialCalculator(input1, input2, currentAction).findResult();
         boolean resultCanBeConvertedToRoman = romanValidator.isResultCanBeConvertedToRoman(result);
         if (!resultCanBeConvertedToRoman) return;
         String romanResult = converterToRoman.convert(result);

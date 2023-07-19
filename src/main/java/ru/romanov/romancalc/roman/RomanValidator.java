@@ -1,5 +1,6 @@
 package ru.romanov.romancalc.roman;
 
+import ru.romanov.romancalc.calculator.Result;
 import ru.romanov.romancalc.utils.AlertsMaster;
 
 public class RomanValidator {
@@ -28,20 +29,16 @@ public class RomanValidator {
         return true;
     }
 
-    public boolean isResultCanBeConvertedToRoman (double result) {
-        if (result == 0) {
+    public boolean isResultCanBeConvertedToRoman (Result result) {
+        if (result.getFullPart() == 0 && result.getFractionPartX1728() == 0) {
             return true;
         }
-        if (result < 0) {
-            AlertsMaster.showNegativeAlert(result);
+        if (result.getFullPart() < 0 || result.getFractionPartX1728() < 0) {
+            AlertsMaster.showNegativeAlert();
             return false;
         }
-        if ((result * 1728) < 1) {
-            AlertsMaster.showSmallSizeAlert(result);
-            return false;
-        }
-        if (result > 3999999) {
-            AlertsMaster.showBigSizeAlert(result);
+        if (result.getFullPart() > 3999999) {
+            AlertsMaster.showBigSizeAlert(result.getFullPart());
             return false;
         }
         return true;

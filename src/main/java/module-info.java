@@ -17,4 +17,6 @@ module ru.romanov.calculator {
     opens ru.romanov.romancalc.view.calc;
     exports ru.romanov.romancalc.window;
     opens ru.romanov.romancalc.window;
+    exports ru.romanov.romancalc.calculator;
+    opens ru.romanov.romancalc.calculator;
 }

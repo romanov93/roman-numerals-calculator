@@ -4,17 +4,15 @@ import java.util.HashMap;
 
 public class RomanToArabicConverter {
 
-    public double convert(String inputNumber) {
+    public long convert(String inputNumber) {
         String fractionPart = findFractionPart(inputNumber);
         String fullPart = inputNumber.replace(fractionPart, "");
-        return romanToLong(fullPart) + romanFractionToDouble(fractionPart);
+        return romanToLong(fullPart) * 1728L + romanFractionToDouble(fractionPart);
     }
 
-    private long romanToLong(String input) {
+    private int romanToLong(String input) {
         if (input.length() == 0) return 0;
-        String convertable = input
-                .replace("V̅", "v").replace("X̅", "x").replace("L̅", "l")
-                .replace("C̅", "c").replace("D̅", "d").replace("M̅", "m");
+        String convertable = getConvertableRomanString(input);
         HashMap<Character, Integer> romanDigits = new HashMap<>();
         romanDigits.put('I', 1);
         romanDigits.put('V', 5);
@@ -31,7 +29,7 @@ public class RomanToArabicConverter {
         romanDigits.put('m', 1000000);
 
         int result = 0;
-        for(int i = 0; i < convertable.length() - 1; i++){
+        for (int i = 0; i < convertable.length() - 1; i++) {
             char currentDigit = convertable.charAt(i);
             char nextDigit = convertable.charAt(i+1);
             if(romanDigits.get(currentDigit) < romanDigits.get(nextDigit))
@@ -39,10 +37,10 @@ public class RomanToArabicConverter {
             else
                 result += romanDigits.get(currentDigit);
         }
-        return result + romanDigits.get(convertable.charAt(convertable.length()-1));
+        return result + romanDigits.get(convertable.charAt(convertable.length() - 1));
     }
 
-    private double romanFractionToDouble(String input) {
+    private int romanFractionToDouble(String input) {
         if (input.length() == 0) return 0;
         HashMap<Character, Integer> romanFractions = new HashMap<>();
         romanFractions.put('S', 864);
@@ -57,12 +55,20 @@ public class RomanToArabicConverter {
         for (int i = 0 ; i < input.length() ; i++) {
             divider += romanFractions.get(input.charAt(i));
         }
-        return divider / (double) 1728;
+        return divider;
     }
 
     private String findFractionPart(String input) {
-        return input.replace("I", "").replace("V", "").replace("X", "")
+        return input
+                .replace("I", "").replace("V", "").replace("X", "")
                 .replace("L", "").replace("C", "").replace("D", "")
                 .replace("M", "").replace("̅", "");
+    }
+
+    public String getConvertableRomanString(String input) {
+        return input
+                .replace("V̅", "v").replace("X̅", "x")
+                .replace("L̅", "l").replace("C̅", "c")
+                .replace("D̅", "d").replace("M̅", "m");
     }
 }
