@@ -16,24 +16,13 @@ public class SpecialCalculator {
         long resultX1728 = findResultX1728();
         long fullPart = 0;
         long fractionPart = 0;
-        if (action.equals("-") || action.equals("+")) {
-            fractionPart = resultX1728 % 1728;
-            fullPart = (resultX1728 - fractionPart) / 1728;
-        } else if (action.equals("×")) {
-            if (resultX1728 < 2985984) {
-                fractionPart = resultX1728 / 1728;
-            } else {
-                fractionPart = resultX1728 % 2985984;
-                fullPart = (resultX1728 - fractionPart) / 2985984;
-            }
-        } else if (action.equals(":")){
-            fractionPart = resultX1728 % 1728;
+
+        fractionPart = resultX1728 % 1728;
+        if (action.equals(":"))
             fullPart = input1 / input2;
-        }
-        while (fractionPart > 1727) {
-            fractionPart -= 1728;
-            fullPart++;
-        }
+        else
+            fullPart = (resultX1728 - fractionPart) / 1728;
+
         return new Result((int)fullPart, (int)fractionPart);
     }
 
@@ -45,8 +34,6 @@ public class SpecialCalculator {
         else if (action.equals(":"))
             return (input1 * 1728) / input2;
         else
-            return input1 * input2;
+            return (input1 * input2) / 1728;
     }
-
-
 }
