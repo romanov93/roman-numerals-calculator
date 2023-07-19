@@ -1,13 +1,14 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.window;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import ru.romanov.romancalc.view.MainAppView;
 
 import java.io.FileNotFoundException;
 
-public class Starter extends Application {
+public class AppWindow extends Application {
 
     private final int WIDTH = 400;
     private final int HEIGHT = 500;

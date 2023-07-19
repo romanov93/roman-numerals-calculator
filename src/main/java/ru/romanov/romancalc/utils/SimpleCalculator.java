@@ -1,4 +1,4 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.utils;
 
 public class SimpleCalculator {
 

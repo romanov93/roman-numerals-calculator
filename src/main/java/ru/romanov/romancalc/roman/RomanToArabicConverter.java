@@ -1,4 +1,4 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.roman;
 
 import java.util.HashMap;
 

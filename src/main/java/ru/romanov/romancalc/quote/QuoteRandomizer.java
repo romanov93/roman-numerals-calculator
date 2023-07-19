@@ -1,4 +1,4 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.quote;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -44,6 +44,4 @@ public class QuoteRandomizer {
                 "(Несчастен тот, кто никогда не бывает несчастным)");
         return quotes;
     }
-
-
 }

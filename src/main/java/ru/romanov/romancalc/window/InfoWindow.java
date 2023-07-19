@@ -1,4 +1,4 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.window;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -7,27 +7,28 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class InfoView extends Stage {
-    private final VBox vBox = new VBox();
-    public InfoView() {}
-    public void showInfoWindow() {
-        String[] lines = getInfoText();
-        for (String string : lines) {
-            Text text = new Text(string);
-            text.setFont(Font.font(15));
-            vBox.getChildren().add(text);
-        }
+public class InfoWindow extends Stage {
+    private final VBox verticalLayout = new VBox();
+    public InfoWindow() {
+        addTextLinesToVerticalLayout();
 
-        Scene scene = new Scene(vBox, 300, 450);
+        Scene scene = new Scene(verticalLayout, 300, 450);
         setScene(scene);
 
         setResizable(false);
         setTitle("Справка");
-        show();
+    }
+
+    private void addTextLinesToVerticalLayout() {
+        for (String string : getInfoText()) {
+            Text text = new Text(string);
+            text.setFont(Font.font(15));
+            verticalLayout.getChildren().add(text);
+        }
     }
 
     private String[] getInfoText() {
-        String[] strings = new String[22];
+        String[] strings = new String[23];
         strings[0] = "I = 1";
         strings[1] = "V = 5";
         strings[2] = "X = 10";

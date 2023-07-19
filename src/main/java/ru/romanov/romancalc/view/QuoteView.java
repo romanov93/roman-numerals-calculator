@@ -1,15 +1,18 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import ru.romanov.romancalc.quote.Quote;
+import ru.romanov.romancalc.quote.QuoteRandomizer;
 
 public class QuoteView extends VBox {
 
     private final Text quote = new Text();
     private final Text translate = new Text();
     private final QuoteRandomizer randomizer = new QuoteRandomizer();
+
     public QuoteView() {
         setAlignment(Pos.CENTER);
         configureElementsStyle();

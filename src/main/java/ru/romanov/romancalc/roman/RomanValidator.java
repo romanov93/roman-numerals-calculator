@@ -1,4 +1,6 @@
-package ru.romanov.calculator;
+package ru.romanov.romancalc.roman;
+
+import ru.romanov.romancalc.utils.AlertsMaster;
 
 public class RomanValidator {
 
