@@ -4,8 +4,11 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import ru.romanov.romancalc.App;
 import ru.romanov.romancalc.quote.Quote;
 import ru.romanov.romancalc.quote.QuoteRandomizer;
+
+import java.io.InputStream;
 
 public class QuoteView extends VBox {
 
@@ -22,7 +25,9 @@ public class QuoteView extends VBox {
     }
 
     private void configureElementsStyle() {
-        quote.setFont(Font.loadFont("file:src/main/resources/FrenchScriptMT.ttf", 28));
+        InputStream inputStream = App.class.getClassLoader().getResourceAsStream("FrenchScriptMT.ttf");
+        quote.setFont(Font.loadFont(inputStream, 28));
+        //quote.setFont(Font.loadFont("file:src/main/resources/FrenchScriptMT.ttf", 28));
         translate.setFont(Font.font("Arial Nova Light", 15));
     }
 

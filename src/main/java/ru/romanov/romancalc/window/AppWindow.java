@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import ru.romanov.romancalc.App;
 import ru.romanov.romancalc.view.MainAppView;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class AppWindow extends Application {
 
@@ -31,7 +33,9 @@ public class AppWindow extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setResizable(false);
         primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image("file:src/main/resources/icon.png"));
+        InputStream inputStream = App.class.getClassLoader().getResourceAsStream("icon.png");
+        primaryStage.getIcons().add(new Image(inputStream));
+        //primaryStage.getIcons().add(new Image("file:src/main/resources/icon.png"));
 
         Scene scene = new Scene(mainView, WIDTH, HEIGHT);
         primaryStage.setScene(scene);

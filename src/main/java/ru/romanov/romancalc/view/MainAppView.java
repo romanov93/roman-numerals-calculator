@@ -1,11 +1,14 @@
 package ru.romanov.romancalc.view;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import ru.romanov.romancalc.App;
 import ru.romanov.romancalc.view.calc.CalculatorView;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class MainAppView extends StackPane {
 
@@ -17,7 +20,9 @@ public class MainAppView extends StackPane {
         configureBorderPane();
         configureQuoteView();
 
-        getChildren().add(new ImageView("file:src/main/resources/background.png"));
+        InputStream inputStream = App.class.getClassLoader().getResourceAsStream("background.png");
+        getChildren().add(new ImageView(new Image(inputStream)));
+        //getChildren().add(new ImageView("file:src/main/resources/background.png"));
         getChildren().add(borderPane);
     }
 

@@ -14,8 +14,8 @@ public class SpecialCalculator {
 
     public Result findResult() {
         long resultX1728 = findResultX1728();
-        long fullPart = 0;
-        long fractionPart = 0;
+        long fullPart;
+        long fractionPart;
 
         fractionPart = resultX1728 % 1728;
         if (action.equals(":"))
