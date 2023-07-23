@@ -1,18 +1,24 @@
 package ru.romanov.romancalc.window;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class InfoWindow extends Stage {
     private final VBox verticalLayout = new VBox();
     public InfoWindow() {
         addTextLinesToVerticalLayout();
+        verticalLayout.getChildren().add(githubLink());
 
-        Scene scene = new Scene(verticalLayout, 300, 450);
+        Scene scene = new Scene(verticalLayout, 300, 480);
         setScene(scene);
 
         setResizable(false);
@@ -52,6 +58,18 @@ public class InfoWindow extends Stage {
         strings[20] = "» = 1/1728";
         strings[21] = "nulla = 0";
         return strings;
+    }
+
+    private Hyperlink githubLink() {
+        Hyperlink link = new Hyperlink("Перейти на GitHub");
+        link.setOnAction(click -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/romanov93/roman-numerals-calculator"));
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return link;
     }
 
 

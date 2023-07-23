@@ -4,20 +4,21 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class QuoteRandomizer {
 
+    private final Quote[] quotes = getQuotesArray();
+
     public Quote getRandomQuote() {
-        Quote[] quotes = getQuotesArray();
         int index = ThreadLocalRandom.current().nextInt(0, quotes.length);
         return quotes[index];
     }
 
     private Quote[] getQuotesArray() {
-        Quote[] quotes = new Quote[15];
+        Quote[] quotes = new Quote[20];
         quotes[0] = new Quote("«Radices litterarum amarae sunt, fructus dulces»",
                 "(Корень учения горек, а плоды его сладки)");
         quotes[1] = new Quote("«Accidit in puncto, quod non speratur in anno»",
                 "(В один миг случается то, на что не надеешься и годами)") ;
         quotes[2] = new Quote("«Felix qui potuit rerum cognoscere causas»",
-                "(Счастлив тот, кто мог познать суть вещей)");
+                "(Счастлив тот, кто cмог познать суть вещей)");
         quotes[3] = new Quote("«Festinationis comites sunt error et poenitentia»",
                 "(Спутники поспешности — ошибка и раскаяние)");
         quotes[4] = new Quote("«Dum vitant stulti vitia, in contraria currunt»",
@@ -42,6 +43,19 @@ public class QuoteRandomizer {
                 "(Не суди, не выслушав)");
         quotes[14] = new Quote("«Miser, qui nunquam miser»",
                 "(Несчастен тот, кто никогда не бывает несчастным)");
+        quotes[15] = new Quote("«Nulla regula sine exceptione»",
+                "(Нет правил без исключений)");
+        quotes[16] = new Quote("«Dimidium facti, qui coepit, habet»",
+                "(Начало - половина дела)");
+        quotes[17] = new Quote("«Omne nimium nocet»",
+                "(Все излишнее вредит)");
+        quotes[18] = new Quote("«Paulatim summa petuntur»",
+                "(Не сразу достигаются вершины)");
+        quotes[19] = new Quote("«Incertus animus dimidium sapientiae est»",
+                "(Сомнение – половина мудрости)");
         return quotes;
+        // quotes[] = new Quote("«»", "()");
     }
+
+
 }

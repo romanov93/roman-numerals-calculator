@@ -1,21 +1,18 @@
 package ru.romanov.romancalc.roman;
 
 import ru.romanov.romancalc.calculator.Result;
-import ru.romanov.romancalc.utils.AlertsMaster;
 
 import java.util.HashMap;
 
 public class ArabicToRomanConverter {
     public String convert(Result result) {
-        if (result.getFullPart() == 0 && result.getFractionPartX1728() == 0) return "nulla";
-        String romanFullPartOfNumber = longToRoman(result.getFullPart());
-        String romanFractionPartOfNumber = fractionPartToRoman(result.getFractionPartX1728());
-        String romanResult = romanFullPartOfNumber + romanFractionPartOfNumber;
-        if (romanResult.isEmpty()) AlertsMaster.showSmallSizeAlert(0);
-        return romanResult;
+        if (result.isZero()) return "nulla";
+        String romanFullPartOfNumber = fullPartToRoman(result.getFullPart());
+        String romanFractionPartOfNumber = fractionPartToRoman(result.getFractionPartMultiplied1728());
+        return romanFullPartOfNumber + romanFractionPartOfNumber;
     }
 
-    private String longToRoman(int num) {
+    private String fullPartToRoman(int num) {
         if (num == 0) return "";
         String[] M100 = {"", "M̅", "M̅M̅", "M̅M̅M̅"};
         String[] C100 = {"", "C̅", "C̅C̅", "C̅C̅C̅", "C̅D̅", "D̅", "D̅C̅", "D̅C̅C̅", "D̅C̅C̅C̅", "C̅M̅"};
@@ -30,22 +27,22 @@ public class ArabicToRomanConverter {
 
     private String fractionPartToRoman(int fractionPartX1728) {
         if (fractionPartX1728 == 0) return "";
-        HashMap<Character, Integer> storeKeyValue = new HashMap<>();
-        storeKeyValue.put('S', 864);
-        storeKeyValue.put('•', 144);
-        storeKeyValue.put('Є', 72);
-        storeKeyValue.put('Ɔ', 36);
-        storeKeyValue.put('Ƨ', 24);
-        storeKeyValue.put('ƻ', 12);
-        storeKeyValue.put('℈', 6);
-        storeKeyValue.put('»', 1);
+        HashMap<Character, Integer> romanFractionsAndValues = new HashMap<>();
+        romanFractionsAndValues.put('S', 864);
+        romanFractionsAndValues.put('•', 144);
+        romanFractionsAndValues.put('Є', 72);
+        romanFractionsAndValues.put('Ɔ', 36);
+        romanFractionsAndValues.put('Ƨ', 24);
+        romanFractionsAndValues.put('ƻ', 12);
+        romanFractionsAndValues.put('℈', 6);
+        romanFractionsAndValues.put('»', 1);
 
         char[] fractionDigits = {'S', '•', 'Є', 'Ɔ', 'Ƨ', 'ƻ', '℈', '»'};
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0 ; i < fractionDigits.length ; i++) {
             char currentChar = fractionDigits[i];
-            int value = storeKeyValue.get(currentChar);
+            int value = romanFractionsAndValues.get(currentChar);
             while (fractionPartX1728 >= value) {
                 sb.append(currentChar);
                 fractionPartX1728 -= value;

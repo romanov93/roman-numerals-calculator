@@ -8,7 +8,7 @@ import ru.romanov.romancalc.App;
 import ru.romanov.romancalc.view.MainAppView;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.util.Objects;
 
 public class AppWindow extends Application {
 
@@ -33,12 +33,15 @@ public class AppWindow extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setResizable(false);
         primaryStage.setTitle(TITLE);
-        InputStream inputStream = App.class.getClassLoader().getResourceAsStream("icon.png");
-        primaryStage.getIcons().add(new Image(inputStream));
-        //primaryStage.getIcons().add(new Image("file:src/main/resources/icon.png"));
+        primaryStage.getIcons().add(getAppIcon());
+
 
         Scene scene = new Scene(mainView, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private Image getAppIcon() {
+        return new Image(Objects.requireNonNull(App.class.getClassLoader().getResourceAsStream("icon.png")));
     }
 }
