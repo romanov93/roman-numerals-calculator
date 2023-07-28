@@ -2,15 +2,15 @@ package ru.romanov.romancalc.calculator;
 
 public class Result {
 
-    private final int fullPart;
+    private final long fullPart;
     private final int fractionPartMultiplied1728;
 
-    public Result(int fullPart, int fractionPartX1728) {
+    public Result(long fullPart, int fractionPartX1728) {
         this.fullPart = fullPart;
         this.fractionPartMultiplied1728 = fractionPartX1728;
     }
 
-    public int getFullPart() {
+    public long getFullPart() {
         return fullPart;
     }
 
@@ -22,11 +22,4 @@ public class Result {
         return (getFullPart() == 0 && getFractionPartMultiplied1728() == 0);
     }
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                "fullPart= " + fullPart +
-                ", fractionPartMultiplied1728= " + fractionPartMultiplied1728 +
-                '}';
-    }
 }

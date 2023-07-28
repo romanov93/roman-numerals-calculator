@@ -41,7 +41,7 @@ public class AppWindow extends Application {
         primaryStage.show();
     }
 
-    private Image getAppIcon() {
+    Image getAppIcon() {
         return new Image(Objects.requireNonNull(App.class.getClassLoader().getResourceAsStream("icon.png")));
     }
 }

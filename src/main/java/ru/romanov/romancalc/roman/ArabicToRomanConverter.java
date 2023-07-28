@@ -7,13 +7,13 @@ import java.util.HashMap;
 public class ArabicToRomanConverter {
     public String convert(Result result) {
         if (result.isZero()) return "nulla";
-        String romanFullPartOfNumber = fullPartToRoman(result.getFullPart());
+        String romanFullPartOfNumber = fullPartToRoman((int) result.getFullPart());
         String romanFractionPartOfNumber = fractionPartToRoman(result.getFractionPartMultiplied1728());
         return romanFullPartOfNumber + romanFractionPartOfNumber;
     }
 
-    private String fullPartToRoman(int num) {
-        if (num == 0) return "";
+    private String fullPartToRoman(int full) {
+        if (full == 0) return "";
         String[] M100 = {"", "M̅", "M̅M̅", "M̅M̅M̅"};
         String[] C100 = {"", "C̅", "C̅C̅", "C̅C̅C̅", "C̅D̅", "D̅", "D̅C̅", "D̅C̅C̅", "D̅C̅C̅C̅", "C̅M̅"};
         String[] X100 = {"", "X̅", "X̅X̅", "X̅X̅X̅", "X̅L̅", "L̅", "L̅X̅", "L̅X̅X̅", "L̅X̅X̅X̅", "X̅C̅"};
@@ -21,8 +21,8 @@ public class ArabicToRomanConverter {
         String[] C =    {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
         String[] X =    {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
         String[] I =    {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
-        return M100[num/1000000] + C100[num%1000000/100000] + X100[num%100000/10000]
-                + M[num%10000/1000] + C[(num%1000)/100]+ X[(num%100)/10] + I[num%10];
+        return M100[full/1000000] + C100[full%1000000/100000] + X100[full%100000/10000]
+                + M[full%10000/1000] + C[(full%1000)/100]+ X[(full%100)/10] + I[full%10];
     }
 
     private String fractionPartToRoman(int fractionPartX1728) {
@@ -50,7 +50,5 @@ public class ArabicToRomanConverter {
         }
         return sb.toString();
     }
-
-
 
 }

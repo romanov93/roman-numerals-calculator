@@ -14,6 +14,7 @@ public class InputAnalyzer {
     }
 
     public static boolean isBothNumbersAlreadyInput(String input) {
+        if (input.isEmpty()) return false;
         String inputAction = getInputAction(input);
         char lastChar = input.charAt(input.length() - 1);
         if (inputAction.isEmpty() || inputAction.charAt(0) == lastChar) {

@@ -5,10 +5,21 @@ import java.util.concurrent.ThreadLocalRandom;
 public class QuoteRandomizer {
 
     private final Quote[] quotes = getQuotesArray();
+    private int currentQuoteIndex;
 
     public Quote getRandomQuote() {
         int index = ThreadLocalRandom.current().nextInt(0, quotes.length);
+        currentQuoteIndex = index;
         return quotes[index];
+    }
+
+    public Quote getNextQuote() {
+        if (currentQuoteIndex == quotes.length - 1) {
+            currentQuoteIndex = 0;
+        } else {
+            currentQuoteIndex++;
+        }
+            return quotes[currentQuoteIndex];
     }
 
     private Quote[] getQuotesArray() {

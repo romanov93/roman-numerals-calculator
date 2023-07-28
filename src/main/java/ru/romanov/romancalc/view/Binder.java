@@ -1,6 +1,7 @@
 package ru.romanov.romancalc.view;
 
 import javafx.scene.control.Button;
+import ru.romanov.romancalc.calculator.Action;
 import ru.romanov.romancalc.calculator.Result;
 import ru.romanov.romancalc.quote.Quote;
 import ru.romanov.romancalc.quote.QuoteRandomizer;
@@ -16,10 +17,12 @@ public class Binder {
 
     private final CalculatorForm calculatorForm;
     private final QuoteForm quoteForm;
-    private final RomanValidator romanValidator = new RomanValidator();
+    private final AlertsMaker alertsMaker = new AlertsMaker();
+    private final RomanValidator romanValidator = new RomanValidator(alertsMaker);
     private final RomanToArabicConverter converterToArabic = new RomanToArabicConverter();
     private final ArabicToRomanConverter converterToRoman = new ArabicToRomanConverter();
     private final QuoteRandomizer quoteRandomizer = new QuoteRandomizer();
+
 
     public Binder(CalculatorForm calculatorForm, QuoteForm quoteForm) {
         this.calculatorForm = calculatorForm;
@@ -42,7 +45,7 @@ public class Binder {
     private void appendAction(String action) {
         String input = getFullInput();
         if (input.isEmpty()) {
-            AlertsMaker.showEmptyFieldAlert();
+            alertsMaker.showEmptyFieldAlert();
             return;
         }
         if (input.contains("nulla")) {
@@ -55,7 +58,7 @@ public class Binder {
         }
         boolean actionAlreadyInput = InputAnalyzer.isTextFieldContainsAction(input);
         if (actionAlreadyInput) {
-            AlertsMaker.showAlreadySelectedActionAlert();
+            alertsMaker.showAlreadySelectedActionAlert();
             return;
         }
         calculatorForm.getTextField().appendText(action);
@@ -75,7 +78,7 @@ public class Binder {
         String lastNumberWithNewDigit = getLastInputNumberWithNewDigit(button.getText());
         boolean numberValid = romanValidator.isNumberValid(lastNumberWithNewDigit);
         if (!numberValid) {
-            AlertsMaker.showWrongNumberFormatAlert(lastNumberWithNewDigit);
+            alertsMaker.showWrongNumberFormatAlert(lastNumberWithNewDigit);
             return;
         }
         calculatorForm.getTextField().appendText(button.getText());
@@ -83,32 +86,38 @@ public class Binder {
     
     private void calculate() {
         if (getFullInput().contains("=")) {
-            AlertsMaker.showAlreadyHaveResultAlert();
+            alertsMaker.showAlreadyHaveResultAlert();
             return;
         }
         boolean bothNumbersAlreadyInput = InputAnalyzer.isBothNumbersAlreadyInput(getFullInput());
         if (!bothNumbersAlreadyInput) {
-            AlertsMaker.showNoInputNumberAlert();
+            alertsMaker.showNoInputNumberAlert();
             return;
         }
         long input1 = converterToArabic.convert(getInputNumbers()[0]);
         long input2 = converterToArabic.convert(getInputNumbers()[1]);
-        Result result = new MathOperation(input1, input2, getInputAction()).findResult();
+        Result result = new MathOperation(input1, input2, getInputAction(), alertsMaker).findResult();
         boolean resultCanBeConvertedToRoman = romanValidator.isResultCanBeConvertedToRoman(result);
         if (!resultCanBeConvertedToRoman) return;
         String romanResult = converterToRoman.convert(result);
         calculatorForm.getTextField().appendText("=" + romanResult);
     }
 
-    public void randomizeQuoteText() {
+    void randomizeQuoteText() {
         Quote randomQuote = quoteRandomizer.getRandomQuote();
         quoteForm.getQuote().setText(randomQuote.getLatinText());
         quoteForm.getTranslate().setText(randomQuote.getTranslate());
     }
 
+    void showNextQuote() {
+        Quote nextQuote = quoteRandomizer.getNextQuote();
+        quoteForm.getQuote().setText(nextQuote.getLatinText());
+        quoteForm.getTranslate().setText(nextQuote.getTranslate());
+    }
+
     public void addBinding() {
         randomizeQuoteText();
-        calculatorForm.getNextQuote().setOnAction(click -> randomizeQuoteText());
+        calculatorForm.getNextQuote().setOnAction(click -> showNextQuote());
         for (Button button : calculatorForm.getButtonsWithDigits())
             button.setOnAction(click -> appendDigit(button));
         calculatorForm.getClean().setOnAction(click -> calculatorForm.getTextField().setText(""));
@@ -135,13 +144,13 @@ public class Binder {
         return inputNumbers;
     }
 
-    String getInputAction() {
+    Action getInputAction() {
         String input = getFullInput();
-        if      (input.contains("-")) return "-";
-        else if (input.contains("+")) return "+";
-        else if (input.contains(":")) return ":";
-        else if (input.contains("×")) return "×";
-        else return "";
+        if      (input.contains("-")) return Action.SUBTRACTION;
+        else if (input.contains("+")) return Action.ADDITION;
+        else if (input.contains(":")) return Action.DIVISION;
+        else if (input.contains("×")) return Action.MULTIPLICATION;
+        else return null;
     }
 
     String getFullInput() {
